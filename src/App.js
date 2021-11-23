@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const data = [
+  { id: 1, title: "Wiadomość 1", body: "Zawartość wiadomości numer 1 ..." },
+  { id: 2, title: "Wiadomość 2", body: "Zawartość wiadomości numer 2 ..." },
+];
+
+setInterval(() => {
+  const index = data.length + 1;
+  data.push({
+    id: index,
+    title: `Wiadomość ${index}`,
+    body: `Zawartość wiadomości numer ${index} ...`,
+  });
+  console.log(data);
+}, 4000);
+
+class App extends React.Component {
+  render() {
+    return <div></div>;
+  }
 }
 
 export default App;
