@@ -12,12 +12,38 @@ setInterval(() => {
     title: `Wiadomość ${index}`,
     body: `Zawartość wiadomości numer ${index} ...`,
   });
-  console.log(data);
-}, 4000);
+}, 8000);
 
 class App extends React.Component {
+  state = {
+    comments: [...data],
+  };
+
+  getData = () => {
+    if (this.state.comments.length === data.length) return;
+
+    this.setState({
+      comments: [...data],
+    });
+  };
+
+  componentDidMount() {
+    this.idI = setInterval(this.getData, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.idI);
+  }
+
   render() {
-    return <div></div>;
+    const comments = this.state.comments.map((comment) => (
+      <div key={comment.id}>
+        <h4>{comment.title}</h4>
+        <p>{comment.body}</p>
+      </div>
+    ));
+
+    return <div className="App">{comments.reverse()}</div>;
   }
 }
 
