@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const data = [
   { id: 1, title: "Wiadomość 1", body: "Zawartość wiadomości numer 1 ..." },
@@ -14,37 +14,28 @@ setInterval(() => {
   });
 }, 8000);
 
-class App extends React.Component {
-  state = {
-    comments: [...data],
+const App = () => {
+  const [comments, setComments] = useState([...data]);
+
+  const getData = () => {
+    if (comments.length === data.length) return;
+
+    setComments([...data]);
   };
 
-  getData = () => {
-    if (this.state.comments.length === data.length) return;
+  useEffect(() => {
+    const idI = setInterval(getData, 5000);
+    return () => clearInterval(idI);
+  });
 
-    this.setState({
-      comments: [...data],
-    });
-  };
+  const _comments = comments.map((comment) => (
+    <div key={comment.id}>
+      <h4>{comment.title}</h4>
+      <p>{comment.body}</p>
+    </div>
+  ));
 
-  componentDidMount() {
-    this.idI = setInterval(this.getData, 5000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.idI);
-  }
-
-  render() {
-    const comments = this.state.comments.map((comment) => (
-      <div key={comment.id}>
-        <h4>{comment.title}</h4>
-        <p>{comment.body}</p>
-      </div>
-    ));
-
-    return <div className="App">{comments.reverse()}</div>;
-  }
-}
+  return <div className="App">{_comments.reverse()}</div>;
+};
 
 export default App;
