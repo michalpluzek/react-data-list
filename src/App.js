@@ -17,16 +17,16 @@ setInterval(() => {
 const App = () => {
   const [comments, setComments] = useState([...data]);
 
+  useEffect(() => {
+    const idI = setInterval(getData, 5000);
+    return () => clearInterval(idI);
+  }, []);
+
   const getData = () => {
     if (comments.length === data.length) return;
 
     setComments([...data]);
   };
-
-  useEffect(() => {
-    const idI = setInterval(getData, 5000);
-    return () => clearInterval(idI);
-  });
 
   const _comments = comments.map((comment) => (
     <div key={comment.id}>
